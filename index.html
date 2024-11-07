@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google map</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK1TtgMJI1d0-VkMvLypcpHIOZ3IZBkbo"></script>
+    <style>
+        /* Style for the map container */
+        #map {
+            height: 500px;
+            width: 100%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="map"></div>        
+    <script>
+        // Array of coordinates
+    const locations = [
+        { lat: 34.0522, lng: -118.2437, title:"Los Angeles", url:"https://google.com" }, // Los Angeles
+        { lat: 36.1699, lng: -115.1398, title:"Las Vegas", url:"https://google.com" }, // Las Vegas
+        { lat: 37.7749, lng: -122.4194, title:"San Francisco", url:"https://google.com" }, // San Francisco
+        // Add more locations as needed
+    ];
+
+    function initMap() {
+        // Center the map on the first location
+        const mapCenter = locations[0];
+        // Define grayscale styles for the map
+        const grayscaleStyle = [
+            {
+                elementType: "geometry",
+                stylers: [{ color: "#f5f5f5" }]
+            },
+            {
+                elementType: "labels.icon",
+                stylers: [{ visibility: "off" }]
+            },
+            {
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#616161" }]
+            },
+            {
+                elementType: "labels.text.stroke",
+                stylers: [{ color: "#f5f5f5" }]
+            },
+            {
+                featureType: "administrative.land_parcel",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#bdbdbd" }]
+            },
+            {
+                featureType: "poi",
+                elementType: "geometry",
+                stylers: [{ color: "#eeeeee" }]
+            },
+            {
+                featureType: "poi",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#757575" }]
+            },
+            {
+                featureType: "poi.park",
+                elementType: "geometry",
+                stylers: [{ color: "#e5e5e5" }]
+            },
+            {
+                featureType: "poi.park",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#9e9e9e" }]
+            },
+            {
+                featureType: "road",
+                elementType: "geometry",
+                stylers: [{ color: "#ffffff" }]
+            },
+            {
+                featureType: "road.arterial",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#757575" }]
+            },
+            {
+                featureType: "road.highway",
+                elementType: "geometry",
+                stylers: [{ color: "#dadada" }]
+            },
+            {
+                featureType: "road.highway",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#616161" }]
+            },
+            {
+                featureType: "road.local",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#9e9e9e" }]
+            },
+            {
+                featureType: "transit.line",
+                elementType: "geometry",
+                stylers: [{ color: "#e5e5e5" }]
+            },
+            {
+                featureType: "transit.station",
+                elementType: "geometry",
+                stylers: [{ color: "#eeeeee" }]
+            },
+            {
+                featureType: "water",
+                elementType: "geometry",
+                stylers: [{ color: "#c9c9c9" }]
+            },
+            {
+                featureType: "water",
+                elementType: "labels.text.fill",
+                stylers: [{ color: "#9e9e9e" }]
+            }
+        ];
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 5,
+            center: mapCenter,
+            styles: grayscaleStyle, // Apply the grayscale style
+        });
+
+        // Loop through locations and add markers
+        locations.forEach(location => {
+            const marker = new google.maps.Marker({
+                position: { lat: location.lat, lng: location.lng },
+                map: map,
+                title: location.title, // Sets the marker's title
+            });
+            // Add a click event listener to the marker to open the URL
+            google.maps.event.addListener(marker, 'click', () => {
+                window.open(location.url, '_blank'); // Opens the URL in a new tab
+            });
+        });
+    }
+
+    // Initialize the map after the window has loaded
+    window.onload = initMap;
+    </script>
+</body>
+</html>
